@@ -15,3 +15,14 @@ export interface TotalLoanData {
   totalPaid: number;
   totalSettled: number;
 }
+
+export interface Employee {
+  name: string;
+}
+
+export interface EmployeeData {
+  [employeeName: string]: {
+    monthData: MonthData;
+    totalLoanData: TotalLoanData;
+  };
+}

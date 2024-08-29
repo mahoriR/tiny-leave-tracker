@@ -14,10 +14,14 @@ function MonthSummary({ currentDate, monthData, totalLoanData }: MonthSummaryPro
   const totalLoanPaid = monthData.reduce((sum, day) => sum + (day.loanPaid || 0), 0);
   const totalLoanSettled = monthData.reduce((sum, day) => sum + (day.loanSettled || 0), 0);
 
+  if (!monthData.length) {
+    return <div className={styles.monthSummary}>No data available for the selected employee.</div>;
+  }
+
   return (
     <div className={styles.monthSummary}>
       <div className={styles.card}>
-        <h3>Net Absence:{totalLeaves - totalExtraTime}</h3>
+        <h3>Net Leave: {totalLeaves - totalExtraTime}</h3>
         <p>Leaves: {totalLeaves}</p>
         <p>Extra Time: {totalExtraTime}</p>
       </div>
