@@ -3,12 +3,12 @@ import { DayData } from '../types';
 
 interface CalendarProps {
   currentDate: Date;
-  dayData: { [key: string]: DayData };
+  monthData: DayData[];
   onDateClick: (date: Date) => void;
   onMonthChange: (newDate: Date) => void;
 }
 
-function Calendar({ currentDate, dayData, onDateClick, onMonthChange }: CalendarProps) {
+function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: CalendarProps) {
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
 
@@ -18,17 +18,15 @@ function Calendar({ currentDate, dayData, onDateClick, onMonthChange }: Calendar
   const renderDay = (day: number | null) => {
     if (day === null) return <div key={`empty-${day}`} className="calendar-day empty" />;
 
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    const dateString = date.toISOString().split('T')[0];
-    const dayDataForDate = dayData[dateString];
+    const dayData = monthData.find(d => d.day === day);
 
     return (
-      <div key={day} className="calendar-day" onClick={() => onDateClick(date)}>
+      <div key={day} className="calendar-day" onClick={() => onDateClick(new Date(currentDate.getFullYear(), currentDate.getMonth(), day))}>
         <span>{day}</span>
-        {dayDataForDate && (
+        {dayData && (
           <div className="day-summary">
-            {dayDataForDate.leave > 0 && <span className="leave">•</span>}
-            {dayDataForDate.extraTime > 0 && <span className="extra-time">•</span>}
+            {dayData.leave > 0 && <span className="leave">•</span>}
+            {dayData.extraTime > 0 && <span className="extra-time">•</span>}
           </div>
         )}
       </div>

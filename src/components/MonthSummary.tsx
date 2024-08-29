@@ -3,17 +3,16 @@ import { DayData } from '../types';
 
 interface MonthSummaryProps {
   currentDate: Date;
-  dayData: { [key: string]: DayData };
+  monthData: DayData[];
 }
 
-function MonthSummary({ currentDate, dayData }: MonthSummaryProps) {
-  // Calculate total leaves and extra time for the current month
-  const totalLeaves = Object.values(dayData).reduce((sum, day) => sum + (day.leave || 0), 0);
-  const totalExtraTime = Object.values(dayData).reduce((sum, day) => sum + (day.extraTime || 0), 0);
+function MonthSummary({ currentDate, monthData }: MonthSummaryProps) {
+  const totalLeaves = monthData.reduce((sum, day) => sum + (day.leave || 0), 0);
+  const totalExtraTime = monthData.reduce((sum, day) => sum + (day.extraTime || 0), 0);
 
   return (
     <div className="month-summary">
-      <p><b>Net Absense: {totalLeaves - totalExtraTime} </b>| (Leaves: {totalLeaves}) (Extra Time: {totalExtraTime})</p>     
+      <p><b>Net Absence: {totalLeaves - totalExtraTime} </b>| (Leaves: {totalLeaves}) (Extra Time: {totalExtraTime})</p>     
     </div>
   );
 }

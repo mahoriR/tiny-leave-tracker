@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DayData } from '../types';
-import styles from './DayModal.module.css'; // Add this import
+import styles from './DayModal.module.css';
 
 interface DayModalProps {
   date: Date;
@@ -15,7 +15,7 @@ function DayModal({ date, data, onClose, onSave }: DayModalProps) {
   const [note, setNote] = useState(data?.note || '');
 
   const handleSave = () => {
-    onSave(date, { extraTime, leave, note });
+    onSave(date, { day: date.getDate(), extraTime, leave, note });
   };
 
   return (
