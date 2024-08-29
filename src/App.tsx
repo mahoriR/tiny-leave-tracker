@@ -3,21 +3,20 @@ import Calendar from './components/Calendar';
 import DayModal from './components/DayModal';
 import MonthSummary from './components/MonthSummary';
 import EmployeeSelector from './components/EmployeeSelector';
-import { DayData,  EmployeeData, Employee } from './types';
+import { DayData,EmployeeData, Employee } from './types';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [employeeData, setEmployeeData] = useState<EmployeeData>(() => {
     const storedData = localStorage.getItem('leaveTrackerData');
-    if (storedData) {
-      return JSON.parse(storedData);
-    }
-    return {};
+    return storedData ? JSON.parse(storedData) : {};
   });
-  const [currentEmployee, setCurrentEmployee] = useState<string | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(() => {
     return Object.keys(employeeData).map(name => ({ name }));
+  });
+  const [currentEmployee, setCurrentEmployee] = useState<string | null>(() => {
+    return employees.length > 0 ? employees[0].name : null;
   });
 
   useEffect(() => {

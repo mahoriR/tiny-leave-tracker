@@ -51,7 +51,7 @@ function DayModal({ date, data, onClose, onSave }: DayModalProps) {
           </select>
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="loanPaid">Loan Paid:</label>
+          <label htmlFor="loanPaid">Loan Given:</label>
           <input
             type="number"
             id="loanPaid"
