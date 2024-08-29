@@ -90,6 +90,10 @@ body {
   margin-bottom: 20px;
 }
 
-.note {
-  color: #9e9e9e;
+.calendar-day.today {
+  background-color: #e0e0e0;
+}
+
+.calendar-day.sunday {
+  background-color: #fff3e0;
 }

@@ -19,9 +19,16 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
     if (day === null) return <div key={`empty-${day}`} className="calendar-day empty" />;
 
     const dayData = monthData.find(d => d.day === day);
+    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const isToday = new Date().toDateString() === date.toDateString();
+    const isSunday = date.getDay() === 0;
 
     return (
-      <div key={day} className="calendar-day" onClick={() => onDateClick(new Date(currentDate.getFullYear(), currentDate.getMonth(), day))}>
+      <div 
+        key={day} 
+        className={`calendar-day ${isToday ? 'today' : ''} ${isSunday ? 'sunday' : ''}`} 
+        onClick={() => onDateClick(date)}
+      >
         <span>{day}</span>
         {dayData && (
           <div className="day-summary">
