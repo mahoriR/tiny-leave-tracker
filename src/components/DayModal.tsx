@@ -13,9 +13,11 @@ function DayModal({ date, data, onClose, onSave }: DayModalProps) {
   const [extraTime, setExtraTime] = useState(data?.extraTime || 0);
   const [leave, setLeave] = useState(data?.leave || 0);
   const [note, setNote] = useState(data?.note || '');
+  const [loanPaid, setLoanPaid] = useState(data?.loanPaid || 0);
+  const [loanSettled, setLoanSettled] = useState(data?.loanSettled || 0);
 
   const handleSave = () => {
-    onSave(date, { day: date.getDate(), extraTime, leave, note });
+    onSave(date, { day: date.getDate(), extraTime, leave, note, loanPaid, loanSettled });
   };
 
   return (
@@ -47,6 +49,26 @@ function DayModal({ date, data, onClose, onSave }: DayModalProps) {
             <option value={0.5}>1/2</option>
             <option value={1}>1</option>
           </select>
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="loanPaid">Loan Paid:</label>
+          <input
+            type="number"
+            id="loanPaid"
+            value={loanPaid}
+            onChange={(e) => setLoanPaid(Number(e.target.value))}
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="loanSettled">Loan Settled:</label>
+          <input
+            type="number"
+            id="loanSettled"
+            value={loanSettled}
+            onChange={(e) => setLoanSettled(Number(e.target.value))}
+            className={styles.input}
+          />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="note">Note:</label>

@@ -1,0 +1,31 @@
+.monthSummary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+  
+}
+
+.card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  width: 48%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.card p {
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+
+.card p strong {
+  font-weight: 600;
+}

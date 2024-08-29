@@ -90,10 +90,31 @@ body {
   margin-bottom: 20px;
 }
 
+.month-summary-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .calendar-day.today {
   background-color: #e0e0e0;
 }
 
 .calendar-day.sunday {
   background-color: #fff3e0;
+}
+
+.loan-coin,
+.settlement-coin {
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+.loan-coin {
+  color: #ff0000;
+}
+
+.settlement-coin {
+  color: #00ff00;
 }

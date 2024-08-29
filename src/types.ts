@@ -3,8 +3,15 @@ export interface DayData {
   extraTime: number;
   leave: number;
   note: string;
+  loanPaid: number;
+  loanSettled: number;
 }
 
 export interface MonthData {
   [key: string]: DayData[];
+}
+
+export interface TotalLoanData {
+  totalPaid: number;
+  totalSettled: number;
 }

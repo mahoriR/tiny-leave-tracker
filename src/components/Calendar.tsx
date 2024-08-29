@@ -15,8 +15,8 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => null);
 
-  const renderDay = (day: number | null) => {
-    if (day === null) return <div key={`empty-${day}`} className="calendar-day empty" />;
+  const renderDay = (day: number | null, index: number) => {
+    if (day === null) return <div key={`empty-${index}`} className="calendar-day empty" />;
 
     const dayData = monthData.find(d => d.day === day);
     const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
@@ -25,7 +25,7 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
 
     return (
       <div 
-        key={day} 
+        key={`day-${day}`}
         className={`calendar-day ${isToday ? 'today' : ''} ${isSunday ? 'sunday' : ''}`} 
         onClick={() => onDateClick(date)}
       >
@@ -34,7 +34,9 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
           <div className="day-summary">
             {dayData.leave > 0 && <span className="leave">•</span>}
             {dayData.extraTime > 0 && <span className="extra-time">•</span>}
-            {dayData.leave <= 0 && dayData.extraTime <= 0 && dayData.note && <span className="note">✎</span>}
+            {dayData.loanPaid > 0 && <span className="loan-coin">L</span>}
+            {dayData.loanSettled > 0 && <span className="settlement-coin">S</span>}
+            {dayData.leave <= 0 && dayData.extraTime <= 0 && dayData.loanPaid <= 0 && dayData.loanSettled <= 0 && dayData.note && <span className="note">✎</span>}
           </div>
         )}
       </div>
@@ -49,11 +51,11 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
         <button onClick={() => onMonthChange(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))}>&gt;</button>
       </div>
       <div className="calendar-grid">
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
-          <div key={day} className="calendar-day weekday">{day}</div>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+          <div key={`weekday-${index}`} className="calendar-day weekday">{day}</div>
         ))}
-        {emptyDays.map(renderDay)}
-        {days.map(renderDay)}
+        {emptyDays.map((_, index) => renderDay(null, index))}
+        {days.map((day) => renderDay(day, day))}
       </div>
     </div>
   );

@@ -2,25 +2,32 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './components/Calendar';
 import DayModal from './components/DayModal';
 import MonthSummary from './components/MonthSummary';
-import { DayData, MonthData } from './types';
+import { DayData, MonthData, TotalLoanData } from './types';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [monthData, setMonthData] = useState<MonthData>({});
-
-  useEffect(() => {
+  const [monthData, setMonthData] = useState<MonthData>(() => {
     const storedData = localStorage.getItem('leaveTrackerData');
     if (storedData) {
-      setMonthData(JSON.parse(storedData));
+      const parsedData = JSON.parse(storedData);
+      return parsedData.monthData;
     }
-  }, []);
+    const currentMonthKey = `${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}`;
+    return { [currentMonthKey]: [] };
+  });
+  const [totalLoanData, setTotalLoanData] = useState<TotalLoanData>(() => {
+    const storedData = localStorage.getItem('leaveTrackerData');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      return parsedData.totalLoanData;
+    }
+    return { totalPaid: 0, totalSettled: 0 };
+  });
 
   useEffect(() => {
-    if (Object.keys(monthData).length > 0) {
-      localStorage.setItem('leaveTrackerData', JSON.stringify(monthData));
-    }
-  }, [monthData]);
+    localStorage.setItem('leaveTrackerData', JSON.stringify({ monthData, totalLoanData }));
+  }, [monthData, totalLoanData]);
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
@@ -45,6 +52,12 @@ function App() {
       }
       return updatedMonthData;
     });
+
+    setTotalLoanData(prevData => ({
+      totalPaid: prevData.totalPaid + data.loanPaid,
+      totalSettled: prevData.totalSettled + data.loanSettled
+    }));
+
     handleCloseModal();
   };
 
@@ -60,7 +73,7 @@ function App() {
   return (
     <div className="App">
       <h1>Tiny Leave Tracker</h1>
-      <MonthSummary currentDate={currentDate} monthData={getCurrentMonthData()} />
+      <MonthSummary currentDate={currentDate} monthData={getCurrentMonthData()} totalLoanData={totalLoanData} />
       <Calendar
         currentDate={currentDate}
         monthData={getCurrentMonthData()}
