@@ -27,6 +27,7 @@ function Calendar({ currentDate, monthData, onDateClick, onMonthChange }: Calend
           <div className="day-summary">
             {dayData.leave > 0 && <span className="leave">•</span>}
             {dayData.extraTime > 0 && <span className="extra-time">•</span>}
+            {dayData.leave <= 0 && dayData.extraTime <= 0 && dayData.note && <span className="note">✎</span>}
           </div>
         )}
       </div>
