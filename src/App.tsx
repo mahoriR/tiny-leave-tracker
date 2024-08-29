@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Employee Leave Tracker</h1>
+      <h1>Tiny Leave Tracker</h1>
       <MonthSummary currentDate={currentDate} dayData={dayData} />
       <Calendar
         currentDate={currentDate}

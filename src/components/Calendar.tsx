@@ -16,7 +16,7 @@ function Calendar({ currentDate, dayData, onDateClick, onMonthChange }: Calendar
   const emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => null);
 
   const renderDay = (day: number | null) => {
-    if (day === null) return <div key={`empty-${day}`} className="calendar-day empty"></div>;
+    if (day === null) return <div key={`empty-${day}`} className="calendar-day empty" />;
 
     const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     const dateString = date.toISOString().split('T')[0];
@@ -27,8 +27,8 @@ function Calendar({ currentDate, dayData, onDateClick, onMonthChange }: Calendar
         <span>{day}</span>
         {dayDataForDate && (
           <div className="day-summary">
-            {dayDataForDate.leave > 0 && <span className="leave">L:{dayDataForDate.leave}</span>}
-            {dayDataForDate.extraTime > 0 && <span className="extra-time">E:{dayDataForDate.extraTime}</span>}
+            {dayDataForDate.leave > 0 && <span className="leave">•</span>}
+            {dayDataForDate.extraTime > 0 && <span className="extra-time">•</span>}
           </div>
         )}
       </div>
@@ -38,12 +38,12 @@ function Calendar({ currentDate, dayData, onDateClick, onMonthChange }: Calendar
   return (
     <div className="calendar">
       <div className="calendar-header">
-        <button onClick={() => onMonthChange(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))}>Prev</button>
+        <button onClick={() => onMonthChange(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))}>&lt;</button>
         <h2>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h2>
-        <button onClick={() => onMonthChange(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))}>Next</button>
+        <button onClick={() => onMonthChange(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))}>&gt;</button>
       </div>
       <div className="calendar-grid">
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
           <div key={day} className="calendar-day weekday">{day}</div>
         ))}
         {emptyDays.map(renderDay)}

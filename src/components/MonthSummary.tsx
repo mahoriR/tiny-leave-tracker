@@ -13,9 +13,7 @@ function MonthSummary({ currentDate, dayData }: MonthSummaryProps) {
 
   return (
     <div className="month-summary">
-      <h2>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h2>
-      <p>Total Leaves: {totalLeaves}</p>
-      <p>Total Extra Time: {totalExtraTime}</p>
+      <p><b>Net Absense: {totalLeaves - totalExtraTime} </b>| (Leaves: {totalLeaves}) (Extra Time: {totalExtraTime})</p>     
     </div>
   );
 }
