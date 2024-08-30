@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Employee } from '../types';
 import styles from './EmployeeSelector.module.css';
 
+import posthog from 'posthog-js';
+
 interface EmployeeSelectorProps {
   employees: Employee[];
   currentEmployee: string | null;
@@ -15,6 +17,7 @@ function EmployeeSelector({ employees, currentEmployee, onEmployeeChange, onAddE
 
   const handleAddEmployee = () => {
     if (newEmployeeName.trim()) {
+      posthog.capture('employee_added', { employee_name: newEmployeeName.trim() });
       onAddEmployee(newEmployeeName.trim());
       setNewEmployeeName('');
       setIsAdding(false);
